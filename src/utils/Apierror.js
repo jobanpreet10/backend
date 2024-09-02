@@ -1,24 +1,23 @@
-class Apieror extends Error{
+class Apieror extends Error {
     constructor(
         statusCode,
-        message ="something went wrong",
-        error = [],
+        message = "something went wrong",
+        errors = [],
         stack = ""
-    ){
-        super(message)
-        this.statusCode =statusCode
-        this.data = null,
-        this.message = message,
-        this.sucess = false,
-        this.errors = errors
+    ) {
+        super(message);
+        this.statusCode = statusCode;
+        this.data = null;
+        this.message = message;
+        this.success = false;
+        this.errors = errors;
 
-        if(stack){
-            this.stack = stack
-        }else{
-            Error.captureStackTrace(this, this.constructor)
+        if (stack) {
+            this.stack = stack;
+        } else {
+            Error.captureStackTrace(this, this.constructor);
         }
     }
 }
 
-
-export Apieror 
+export default Apieror;
