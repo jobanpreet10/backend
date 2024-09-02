@@ -1,1 +1,1 @@
-export const DB_name = 'yourDatabaseName'; // Replace with your actual database name
+export const DB_name = 'videotube'; // Replace with your actual database name
