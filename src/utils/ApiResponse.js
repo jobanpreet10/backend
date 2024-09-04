@@ -6,3 +6,5 @@ class ApiResponse {
         this.sucess = sucessCode < 400
     }
 }
+
+export { ApiResponse }
