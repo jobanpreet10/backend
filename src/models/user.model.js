@@ -1,7 +1,6 @@
 import mongoose , {Schema} from "mongoose";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt";
-import serverConfig from '../config/server.config'
 
 const userSchema =  new Schema (
     {
@@ -20,7 +19,7 @@ const userSchema =  new Schema (
             lowercase:true,
             trim:true,
         },
-        fullname:{
+        fullName:{
             type: String,
             required: true,
             trim:true,
@@ -54,7 +53,7 @@ const userSchema =  new Schema (
 userSchema.pre("save", async function (next) {         // never user arrow function here because there is no this context
     if(!this.isModified("password"))  return next();
 
-    this.password = await bcrypt.hash(this.password, 8)
+    this.password = bcrypt.hash(this.password, 8)
     next()
 } )      
 
@@ -70,9 +69,9 @@ userSchema.methods.generateAccessToken = function (){
             username: this.username,
             fullName:this.fullName
         },
-        ACCESS_TOKEN_SECRET, 
+        process.env.ACCESS_TOKEN_SECRET, // jha tak authorization ha aapki vha tak aap acess kr skte ho  -> short duration
         {
-             expiresIn:serverConfig.ACCESS_TOKEN_EXPIRY
+             expiresIn:process.env.ACCESS_TOKEN_EXPIRY
         }
     )
 }
@@ -81,9 +80,9 @@ userSchema.methods.generateRefreshToken = function(){
         {
             _id: this._id
         },
-        REFRESH_TOKEN_SECRET, 
+        process.env.REFRESH_TOKEN_SECRET, 
         {
-             expiresIn:REFRESH_TOKEN_EXPIRY
+             expiresIn:process.env.REFRESH_TOKEN_EXPIRY
         }
     )
 }
